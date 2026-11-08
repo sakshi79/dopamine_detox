@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dopamine Detox test data</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="options-page">
+  <main class="options">
+    <h1>Test data</h1>
+    <p class="intro">
+      Load a made-up browsing history so you can see a reading, trigger a detox and test
+      blocking without waiting two days. This page only works when the extension is loaded unpacked.
+    </p>
+
+    <div class="lock-note" id="backup-note" hidden>
+      <p id="backup-text"></p>
+      <button type="button" id="restore">Restore my real data</button>
+    </div>
+
+    <div class="group">
+      <h2>Pick a history</h2>
+      <div class="scenarios" id="scenarios" role="radiogroup" aria-label="Test histories"></div>
+    </div>
+
+    <div class="group">
+      <h2>Blocking</h2>
+      <div class="field">
+        <label class="check">
+          <input type="checkbox" id="near-limit">
+          <span id="near-limit-text">Start a detox now with 1 minute of social time left today, so you can test blocking right away.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="primary" id="load">Load test history</button>
+      <button type="button" class="danger" id="clear">Clear all data</button>
+      <span class="status-msg" id="status" role="status"></span>
+    </div>
+  </main>
+  <script type="module" src="dev.js"></script>
+</body>
+</html>

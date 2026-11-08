@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dopamine Detox settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="options-page">
+  <main class="options">
+    <h1>Dopamine Detox</h1>
+    <p class="intro">
+      This extension watches which sites you spend time on and how you move between them.
+      After two days it gives you a baseline reading. If the baseline drops too low,
+      it starts a detox that limits social sites to a small daily allowance.
+    </p>
+
+    <form id="form" novalidate>
+      <p class="lock-note" id="lock-note" hidden>
+        A detox is running, so the site list, daily allowance and data reset are locked until it ends.
+      </p>
+
+      <div class="group">
+        <h2>Detox rules</h2>
+
+        <div class="field">
+          <span class="label" id="threshold-label">Start a detox when your baseline drops below</span>
+          <div class="inline">
+            <input type="range" id="detox-below" min="10" max="90" step="5" aria-labelledby="threshold-label">
+            <output id="detox-below-out" for="detox-below"></output>
+          </div>
+          <span class="help">Higher numbers make detoxes kick in sooner.</span>
+        </div>
+
+        <div class="field">
+          <label for="budget">Social time allowed per day during a detox</label>
+          <div class="inline">
+            <input type="number" id="budget" min="0" max="480" step="5"> <span>minutes</span>
+          </div>
+          <span class="help">Set to 0 to close social sites completely during a detox.</span>
+        </div>
+
+        <div class="field">
+          <label for="days">Detox length</label>
+          <div class="inline">
+            <input type="number" id="days" min="1" max="14" step="1"> <span>days</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="auto">
+            <span>Start detoxes automatically. When off, you’ll get a recommendation and can start one yourself.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Social sites</h2>
+        <div class="field">
+          <label for="sites">One domain per line. Subdomains are included.</label>
+          <textarea id="sites" spellcheck="false" autocomplete="off"></textarea>
+          <span class="help">YouTube is on the list by default. Remove it if you mostly use it for learning.</span>
+          <div><button type="button" id="restore-sites">Restore default list</button></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Late night</h2>
+        <div class="field">
+          <span class="label">Social time in this window counts against your baseline</span>
+          <div class="inline">
+            <label for="night-start" class="sr-only">Late night starts at</label>
+            <select id="night-start"></select>
+            <span>to</span>
+            <label for="night-end" class="sr-only">Late night ends at</label>
+            <select id="night-end"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>How the baseline is scored</h2>
+        <p class="muted">
+          Each signal is scored from 0 to its ceiling. The weighted total is subtracted from 100,
+          then averaged over your last three days with at least 20 minutes of browsing.
+        </p>
+        <dl class="signals">
+          <dt>Share of browsing on social, 35%</dt>
+          <dd>Full weight when social sites take half your browsing time.</dd>
+          <dt>Time on social, 25%</dt>
+          <dd>Full weight at three hours a day.</dd>
+          <dt>Checking habit, 20%</dt>
+          <dd>How often you open social sites. Visits under 90 seconds count extra. Full weight at 40 opens a day.</dd>
+          <dt>Tab hopping, 10%</dt>
+          <dd>Switches between sites per hour of browsing. Full weight at 60 an hour.</dd>
+          <dt>Late-night scrolling, 10%</dt>
+          <dd>Social time inside your late-night window. Full weight at 45 minutes.</dd>
+        </dl>
+      </div>
+
+      <div class="group">
+        <h2>Your data</h2>
+        <p>
+          Everything stays in this browser and nothing is sent anywhere. Only site names and time
+          totals are stored, never full addresses or page content. Days older than 30 are deleted automatically.
+        </p>
+        <button type="button" id="reset" class="danger">Delete all browsing data</button>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary">Save changes</button>
+        <span class="status-msg" id="status" role="status"></span>
+      </div>
+    </form>
+
+    <div class="group" id="dev-group" hidden>
+      <h2>Testing</h2>
+      <p>You’re running an unpacked copy. <a href="dev.html">Load test data</a> to try a reading, a detox and blocking without waiting for real history.</p>
+    </div>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>
